@@ -3,6 +3,17 @@ const conexion = require('./config/conexion')
 
 //asignamos todas las rutas
 
+//get roles
+router.get('/roles',(req, res) => {
+    let sql = 'select * from roles';
+    conexion.query(sql,(err,rows,fields) => {
+        if(err) throw err;
+        else{
+            res.json(rows)
+        }
+    });
+});
+
 //get usuarios
 router.get('/',(req, res) => {
     let sql = 'select * from usuarios';
@@ -26,22 +37,12 @@ router.get('/:id',(req, res) => {
     });
 });
 
-//get roles
-router.get('/roles',(req, res) => {
-    let sql = 'select * from roles';
-    conexion.query(sql,(err,rows,fields) => {
-        if(err) throw err;
-        else{
-            res.json(rows)
-        }
-    });
-});
+
 
 //agregar usuario
 router.post('/',(req, res) => {
     const{rol, nombre, activo} = req.body
-
-    let sql = `insert into usuarios(rol, nombre, activo) values('${rol}',${nombre},${activo})`;
+    let sql = `insert into usuarios(Id_Rol, Nombre, Activo) values('${rol}','${nombre}','${activo}')`;
     conexion.query(sql, (err, rows, fields) => {
         if(err) throw err
         else{
