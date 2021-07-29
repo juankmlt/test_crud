@@ -28,20 +28,21 @@ router.get('/',(req, res) => {
 //buscar usuarios por id
 router.get('/:id',(req, res) => {
     const {id} = req.params
-    let sql = 'select * from usuarios';
+    let sql = `select * from usuarios where Id_uduario = ?`;
     conexion.query(sql,[id],(err,rows,fields) => {
         if(err) throw err;
         else{
             res.json(rows)
         }
-    });
-});
+    })
+})
 
 
 
 //agregar usuario
 router.post('/',(req, res) => {
     const{rol, nombre, activo} = req.body
+    console.log(req.body);
     let sql = `insert into usuarios(Id_Rol, Nombre, Activo) values('${rol}','${nombre}','${activo}')`;
     conexion.query(sql, (err, rows, fields) => {
         if(err) throw err
